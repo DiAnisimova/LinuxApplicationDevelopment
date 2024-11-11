@@ -1,0 +1,52 @@
+# Russian translations for guess package.
+# Copyright (C) 2024 THE guess'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the guess package.
+# Diana Anisimova <diana.anisimova.01@mail.ru>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-11 20:19+0300\n"
+"PO-Revision-Date: 2024-11-11 20:20+0300\n"
+"Last-Translator: Diana Anisimova <diana.anisimova.01@mail.ru>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../src/guess.c:18
+#, c-format
+msgid "Think of a number between 1 and 100.\n"
+msgstr "Загадайте число от 1 до 100.\n"
+
+#: ../src/guess.c:22
+#, c-format
+msgid "Is your number greater than %d? (yes/no): "
+msgstr "Ваше число больше %d? (да/нет): "
+
+#: ../src/guess.c:24
+#, c-format
+msgid "Error reading input.\n"
+msgstr "Ошибка чтения ввода.\n"
+
+#: ../src/guess.c:28
+msgid "yes"
+msgstr "да"
+
+#: ../src/guess.c:30
+msgid "no"
+msgstr "нет"
+
+#: ../src/guess.c:33
+#, c-format
+msgid "Please answer 'yes' or 'no'.\n"
+msgstr "Пожалуйста, ответьте 'да' или 'нет'.\n"
+
+#: ../src/guess.c:37
+#, c-format
+msgid "Your number is %d!\n"
+msgstr "Ваше число - %d!\n"
