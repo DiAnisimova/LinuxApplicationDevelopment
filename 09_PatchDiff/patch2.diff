@@ -1,0 +1,107 @@
+--- maze.c	2024-11-24 21:05:23.318878550 +0300
++++ maze2.c	2024-11-24 21:06:01.865265234 +0300
+@@ -1,14 +1,18 @@
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
+ #include <time.h>
+ 
+-#define MAZE_WIDTH 6
+-#define MAZE_HEIGHT 6
+-#define GRID_WIDTH (MAZE_WIDTH * 2 + 1)
+-#define GRID_HEIGHT (MAZE_HEIGHT * 2 + 1)
++int MAZE_WIDTH;
++int MAZE_HEIGHT;
++int GRID_WIDTH;
++int GRID_HEIGHT;
+ 
+-char grid[GRID_HEIGHT][GRID_WIDTH];
+-int visited[MAZE_HEIGHT][MAZE_WIDTH];
++char** grid;
++int** visited;
++
++char wall_char = '#';
++char space_char = '.';
+ 
+ int dx[] = { 0, 0, 1, -1 };
+ int dy[] = { -1, 1, 0, 0 };
+@@ -18,13 +22,13 @@
+ 
+     for (y = 0; y < GRID_HEIGHT; y++) {
+         for (x = 0; x < GRID_WIDTH; x++) {
+-            grid[y][x] = '#';
++            grid[y][x] = wall_char;
+         }
+     }
+ 
+     for (y = 0; y < MAZE_HEIGHT; y++) {
+         for (x = 0; x < MAZE_WIDTH; x++) {
+-            grid[y * 2 + 1][x * 2 + 1] = '.';
++            grid[y * 2 + 1][x * 2 + 1] = space_char;
+             visited[y][x] = 0;
+         }
+     }
+@@ -50,7 +54,7 @@
+         int ny = y + dy[dirs[i]];
+ 
+         if (nx >= 0 && nx < MAZE_WIDTH && ny >= 0 && ny < MAZE_HEIGHT && !visited[ny][nx]) {
+-            grid[y * 2 + 1 + dy[dirs[i]]][x * 2 + 1 + dx[dirs[i]]] = '.';
++            grid[y * 2 + 1 + dy[dirs[i]]][x * 2 + 1 + dx[dirs[i]]] = space_char;
+             generate_maze(nx, ny);
+         }
+     }
+@@ -65,12 +69,53 @@
+     }
+ }
+ 
+-int main() {
++void allocate_memory() {
++    int y;
++    grid = malloc(GRID_HEIGHT * sizeof(char *));
++    for (y = 0; y < GRID_HEIGHT; y++) {
++        grid[y] = malloc(GRID_WIDTH * sizeof(char));
++    }
++    visited = malloc(MAZE_HEIGHT * sizeof(int *));
++    for (y = 0; y < MAZE_HEIGHT; y++) {
++        visited[y] = malloc(MAZE_WIDTH * sizeof(int));
++    }
++}
++
++void free_memory() {
++    int y;
++    for (y = 0; y < GRID_HEIGHT; y++) {
++        free(grid[y]);
++    }
++    free(grid);
++    for (y = 0; y < MAZE_HEIGHT; y++) {
++        free(visited[y]);
++    }
++    free(visited);
++}
++
++int main(int argc, char** argv) {
++    int n = 6;
++    if (argc > 2) {
++        if (strlen(argv[1]) == 2) {
++            space_char = argv[1][0];
++            wall_char = argv[1][1];
++        }
++        n = atoi(argv[2]);
++        if (n <= 0) n = 6;
++    }
++
++    MAZE_WIDTH = n;
++    MAZE_HEIGHT = n;
++    GRID_WIDTH = MAZE_WIDTH * 2 + 1;
++    GRID_HEIGHT = MAZE_HEIGHT * 2 + 1;
++
+     srand(time(NULL));
+ 
++    allocate_memory();
+     init_grid();
+     generate_maze(0, 0);
+     print_grid();
++    free_memory();
+ 
+     return 0;
+ }
